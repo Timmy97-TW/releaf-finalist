@@ -1,10 +1,16 @@
-/* Stage renderer shared by show.html (minimal) and animate.html (some animation).
-   window.MOTION === 'on' turns the cues on. Everything else is identical, so the
-   two views can never drift apart.  Keys: arrows / space / 1-9 / Home / End. */
+/* Stage renderer shared by show.html (minimal) and animate.html.
+   window.MOTION === 'on' turns the cues on; everything else is identical, so
+   the two views can never drift apart.
+
+   Slides are authored on a fixed 1600x900 canvas and scaled to fit the window,
+   so every size in deck.css is an absolute number. */
 
 (function () {
   const MOTION = window.MOTION === 'on';
-  const stage = document.getElementById('stage');
+  const W = 1600, H = 900;
+  const wrap = document.getElementById('stagewrap');
+  const box = document.getElementById('framebox');
+  const frame = document.getElementById('frame');
   const pips = document.getElementById('pips');
   const prog = document.getElementById('prog');
   const clock = document.getElementById('clock');
@@ -13,55 +19,31 @@
   const total = SLIDES.reduce((a, s) => a + s.secs, 0);
   let i = 0;
 
-  const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
   const mmss = (s) => Math.floor(s / 60) + ':' + String(Math.round(s % 60)).padStart(2, '0');
 
-  // Pull a leading number out of a title so it can roll up on the animated view.
-  function titleHTML(s) {
-    const huge = /^[\d.,]+%?$/.test(s.title.trim());
-    const cls = huge ? 'ttl huge' : 'ttl';
-    if (huge && MOTION && s.cue === 'count') {
-      return `<h2 class="${cls}" data-count="${esc(s.title)}">${esc(s.title)}</h2>`;
-    }
-    return `<h2 class="${cls}">${esc(s.title)}</h2>`;
-  }
-
-  stage.innerHTML = SLIDES.map((s, n) => `
-    <section class="slide${s.bare ? ' bare' : ''}" data-ground="${s.ground}" id="s-${s.id}" aria-hidden="true">
-      <div class="fig"><img src="img/${s.img}" alt=""></div>
-      <div class="sptab">${s.sp} / 8</div>
-      ${s.bare ? '' : `<div class="plate">
-        ${s.kicker ? `<div class="kicker">${esc(s.kicker)}</div>` : ''}
-        ${titleHTML(s)}
-        ${s.lines.length ? `<ul class="lines">${s.lines.map((l) => `<li>${esc(l)}</li>`).join('')}</ul>` : ''}
-      </div>`}
+  frame.innerHTML = SLIDES.map((s, n) => `
+    <section class="slide ${s.cls || ''}" id="s-${s.id}" aria-hidden="true">
+      ${s.body}
+      <div class="slideno">${n + 1} / ${SLIDES.length}</div>
     </section>`).join('');
 
-  pips.innerHTML = SLIDES.map((s, n) => `<b data-go="${n}" title="${esc(s.title)}"></b>`).join('');
+  if (typeof drawCharts === 'function') drawCharts(frame);
+
+  pips.innerHTML = SLIDES.map((s, n) => `<b data-go="${n}" title="${s.id}"></b>`).join('');
   pips.addEventListener('click', (e) => {
     const b = e.target.closest('[data-go]');
     if (b) go(+b.dataset.go);
   });
 
-  const els = [...stage.children];
+  const els = [...frame.children];
 
-  function rollNumber(h2) {
-    const raw = h2.dataset.count;
-    const m = raw.match(/^([\d.,]+)(%?)$/);
-    if (!m) return;
-    const target = parseFloat(m[1].replace(/,/g, ''));
-    const dec = (m[1].split('.')[1] || '').length;
-    const suffix = m[2];
-    const t0 = performance.now();
-    const dur = 620;
-    (function step(t) {
-      const p = Math.min(1, (t - t0) / dur);
-      const e = 1 - Math.pow(1 - p, 3);
-      h2.textContent = (target * e).toFixed(dec) + suffix;
-      if (p < 1) requestAnimationFrame(step);
-      else h2.textContent = raw;
-    })(t0);
+  function fit() {
+    const k = Math.min(wrap.clientWidth / W, wrap.clientHeight / H);
+    frame.style.transform = `scale(${k})`;
+    box.style.width = W * k + 'px';
+    box.style.height = H * k + 'px';
   }
+  addEventListener('resize', fit);
 
   function go(n) {
     i = Math.max(0, Math.min(SLIDES.length - 1, n));
@@ -79,26 +61,22 @@
     if (spnow) spnow.textContent = 'Speaker ' + s.sp;
     history.replaceState(null, '', '#' + s.id);
 
-    if (!MOTION) return;
-
-    const el = els[i];
-    const h2 = el.querySelector('[data-count]');
-    if (h2 && s.cue === 'count') rollNumber(h2);
-
-    if (s.cue === 'reveal') {
-      // The slide still lands whole: the lines follow the title by a beat, they
-      // are never held back waiting for a click.
-      el.querySelectorAll('.lines li').forEach((li, k) => {
-        li.style.transition = 'none';
-        li.style.opacity = '0';
-        li.style.transform = 'translateY(6px)';
-        requestAnimationFrame(() => {
-          li.style.transition = 'opacity .36s ease ' + (0.22 + k * 0.14) + 's, transform .36s ease ' + (0.22 + k * 0.14) + 's';
-          li.style.opacity = '';
-          li.style.transform = '';
-        });
+    if (!MOTION || !s.cue) return;
+    // The slide still lands whole: a cued element follows the rest by a beat,
+    // it is never held back waiting for a click.
+    s.cue.forEach((id, k) => {
+      const el = els[i].querySelector('#' + id);
+      if (!el) return;
+      el.style.transition = 'none';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(10px)';
+      requestAnimationFrame(() => {
+        const d = 0.3 + k * 0.18;
+        el.style.transition = `opacity .42s ease ${d}s, transform .42s ease ${d}s`;
+        el.style.opacity = '';
+        el.style.transform = '';
       });
-    }
+    });
   }
 
   addEventListener('keydown', (e) => {
@@ -114,8 +92,8 @@
     }
   });
 
-  stage.addEventListener('click', (e) => {
-    const r = stage.getBoundingClientRect();
+  box.addEventListener('click', (e) => {
+    const r = box.getBoundingClientRect();
     go(e.clientX - r.left < r.width * 0.25 ? i - 1 : i + 1);
   });
 
@@ -124,6 +102,7 @@
     if (n >= 0 && n !== i) go(n);
   });
 
+  fit();
   const from = SLIDES.findIndex((s) => s.id === location.hash.slice(1));
   go(from >= 0 ? from : 0);
 })();

@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Script — ReLEAF Finalist Presentation</title>
-<link rel="stylesheet" href="assets/deck.css?3">
+<link rel="stylesheet" href="assets/deck.css?v9">
 </head>
 <body>
 <div class="bar">
-  <span class="mark">Re<em>LEAF</em> · Finalist Presentation</span>
+  <span class="mark">Re<em>LEAF</em> · Finalist</span>
   <nav>
     <a href="index.html" aria-current="page">Script</a>
     <a href="show.html">Slides</a>
@@ -17,37 +17,45 @@
   <span class="right"><span id="spnow"></span><span id="clock"></span><span>15:00 · Main Stage</span></span>
 </div>
 <div class="wrap">
-  <p class="lede">Fifteen minutes on the Main Stage, eight speakers, twenty-four slides, about 14:20 of speech.</p>
-  <p class="sub">Adapted from the presentation video. Amber boxes are for the 10-minute judges’ Q&amp;A, not for the stage.</p>
+  <p class="lede">Fifteen minutes on the Main Stage. Eight speakers, <span id="n"></span> slides,
+    <span id="t"></span> of speech.</p>
+  <p class="subl">Every slide is drawn, not screenshotted: charts come from the numbers, photographs
+    appear only where the subject is photographic. Amber boxes are backup for the 10-minute
+    judges’ Q&amp;A and are never shown on stage.</p>
   <div id="script"></div>
 </div>
-<script src="assets/deck.js?3"></script>
+<script src="assets/deck.js?v9"></script>
+<script src="assets/charts.js?v9"></script>
 <script>
 (function(){
   const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
   const mmss=s=>Math.floor(s/60)+':'+String(Math.round(s%60)).padStart(2,'0');
+  const W=1600,H=900,TW=418,K=TW/W;
   let t=0,out='',sp=null;
-  SLIDES.forEach(s=>{
+  SLIDES.forEach((s,n)=>{
     if(s.sp!==sp){
       sp=s.sp;
       const info=SPEAKERS.find(x=>x.n===sp);
-      const ends=SLIDES.filter(x=>x.sp===sp).reduce((a,x)=>a+x.secs,0);
-      out+=`<div class="sec"><h2>${sp}. ${esc(info.part)}</h2><span class="who">${esc(info.name)} · ${mmss(t)}–${mmss(t+ends)}</span></div>`;
+      const d=SLIDES.filter(x=>x.sp===sp).reduce((a,x)=>a+x.secs,0);
+      out+=`<div class="sec"><h2>${sp}. ${esc(info.part)}</h2><span class="who">${esc(info.name)} · ${mmss(t)}–${mmss(t+d)}</span></div>`;
     }
     const words=s.say.trim().split(/\s+/).length;
-    out+=`<div class="card" id="${s.id}">
-      <figure><img src="img/${s.img}" alt="" loading="lazy"><figcaption class="cap">${esc(s.img)}</figcaption></figure>
+    out+=`<div class="srow" id="${s.id}">
+      <div><div class="thumbbox"><div class="framebox" style="height:${H*K}px">
+        <div class="frame" style="transform:scale(${K})"><section class="slide on ${s.cls||''}">${s.body}</section></div>
+      </div></div></div>
       <div>
-        <div class="meta">${mmss(t)} · ${s.secs}s · ${words} words · ${Math.round(words/(s.secs/60))} wpm</div>
-        <h3>${esc(s.title)}${s.bare?' <small style="font-size:12px;opacity:.45;letter-spacing:.1em;text-transform:uppercase;vertical-align:middle">slide carries no added text</small>':''}</h3>
-        ${(s.kicker||s.lines.length)?`<p class="onslide">${[s.kicker,...s.lines].filter(Boolean).map(l=>`<span>${esc(l)}</span>`).join('')}</p>`:''}
+        <div class="meta">${n+1}. ${mmss(t)} · ${s.secs}s · ${words} words · ${Math.round(words/(s.secs/60))} wpm</div>
+        <h3>${esc(s.title||s.id)}</h3>
         <p class="say">${esc(s.say)}</p>
         ${s.note?`<div class="note"><b>If pressed</b>${esc(s.note)}</div>`:''}
       </div></div>`;
     t+=s.secs;
   });
-  out+=`<div class="sec"><h2>Total</h2><span class="who">${mmss(t)} of speech</span></div>`;
   document.getElementById('script').innerHTML=out;
+  document.getElementById('n').textContent=SLIDES.length;
+  document.getElementById('t').textContent=mmss(t);
+  drawCharts(document);
 })();
 </script>
 </body></html>
