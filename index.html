@@ -3,59 +3,281 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Script — ReLEAF Finalist Presentation</title>
-<link rel="stylesheet" href="assets/deck.css?v9">
+<title>ReLEAF · Finalist presentation</title>
+<meta name="description" content="GEMS Taiwan ReLEAF: the fifteen-minute finalist presentation, every slide with its speaking script and the numbers behind it.">
+<link rel="stylesheet" href="assets/deck.css?v=20">
+<style>
+.wrap{max-width:1600px;margin:0 auto;padding:0 48px}
+.top{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.78);
+  backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid var(--line-2)}
+.top .wrap{display:flex;align-items:center;gap:24px;height:58px}
+.brand{font-size:17px;font-weight:650;letter-spacing:-.01em;white-space:nowrap}
+.brand span{color:var(--ink-3);font-weight:450}
+.top .vsw{margin-left:auto}
+.jump{font-size:13.5px;font-weight:550;color:var(--ink-2);text-decoration:none;white-space:nowrap}
+.jump:hover{color:var(--ink)}
+
+.hero{padding:116px 0 80px}
+.hero h1{font-size:clamp(44px,6.2vw,94px);line-height:.98;letter-spacing:-.035em;font-weight:800;
+  margin:0 0 26px;max-width:17ch}
+.hero h1 em{font-style:normal;color:var(--olive)}
+.hero p{font-size:clamp(19px,1.5vw,25px);line-height:1.45;color:var(--ink-2);max-width:64ch;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:0 52px;margin-top:54px;padding-top:28px;border-top:1px solid var(--line)}
+.meta div{min-width:124px}
+.meta dt{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.meta dd{margin:7px 0 0;font-size:19px;font-weight:600;letter-spacing:-.01em}
+
+.ways{padding:0 0 80px}
+.ways .wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.way{display:block;text-decoration:none;border:1px solid var(--line);border-radius:18px;
+  padding:26px 26px 24px;background:#fff;
+  transition:border-color .2s var(--ease),transform .2s var(--ease),box-shadow .2s var(--ease)}
+.way:hover{border-color:rgba(29,29,27,.3);transform:translateY(-2px);
+  box-shadow:0 14px 34px -22px rgba(0,0,0,.4)}
+.way b{display:block;font-size:22px;font-weight:700;letter-spacing:-.02em}
+.way p{margin:8px 0 0;font-size:16px;line-height:1.5;color:var(--ink-2)}
+.way i{display:block;font-style:normal;margin-top:16px;font-size:13px;font-weight:650;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--olive)}
+.way.here{background:var(--bg-2);border-color:transparent}
+.way.here i{color:var(--ink-3)}
+
+/* the six chapters, as a band of cards */
+.chaps{padding:0 0 84px}
+.chaps .wrap{border-top:1px solid var(--line);padding-top:26px}
+.okick{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 20px}
+.cgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+.chap{display:block;text-decoration:none;color:inherit;border:1px solid var(--line);
+  border-radius:16px;overflow:hidden;background:#fff;
+  transition:border-color .2s var(--ease),transform .2s var(--ease)}
+.chap:hover{border-color:rgba(29,29,27,.25);transform:translateY(-2px)}
+.chap img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.chap div{padding:14px 16px 16px}
+.chap b{display:block;font-size:18px;font-weight:720;letter-spacing:-.015em}
+.chap span{display:block;font-size:14px;color:var(--ink-3);margin-top:3px;
+  font-variant-numeric:tabular-nums}
+@media (max-width:1100px){ .cgrid{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (max-width:620px){ .cgrid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+
+.contents{padding:0 0 92px;scroll-margin-top:72px}
+.h2{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 22px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.toc{margin:0;padding:0;list-style:none}
+.toc li{border-bottom:1px solid var(--line-2)}
+.toc a{display:grid;grid-template-columns:54px 70px minmax(0,1fr) 110px 86px auto;gap:22px;
+  align-items:baseline;padding:16px 10px 16px 0;text-decoration:none;border-radius:10px;
+  transition:background .18s var(--ease),padding-left .18s var(--ease)}
+.toc a:hover{background:var(--bg-2);padding-left:14px}
+.toc .n{font-size:13px;font-weight:700;color:var(--olive);letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.toc .t{font-size:13px;font-weight:600;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.toc .ttl{font-size:22px;font-weight:650;letter-spacing:-.02em;line-height:1.2}
+.toc .ttl span{display:block;font-size:15px;font-weight:450;color:var(--ink-2);margin-top:3px;letter-spacing:0}
+.toc .ch{font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3)}
+.toc .who{font-size:14.5px;font-weight:600;color:var(--ink-3)}
+.toc li.hand{border-top:2px solid var(--olive)}
+.toc li.hand .who{color:var(--olive-d);font-weight:750}
+.toc li.hand .who:after{content:" takes over";font-size:11.5px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--olive);display:block;margin-top:2px}
+.toc .d{font-size:13.5px;font-weight:600;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.row{padding:72px 0;border-top:1px solid var(--line-2);scroll-margin-top:66px}
+.row .wrap{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:58px;align-items:start}
+.slideCol{min-width:0}
+.rowhead{display:flex;align-items:baseline;gap:16px;margin:0 0 18px}
+.rowhead .n{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--olive);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rowhead h2{margin:0;font-size:31px;font-weight:750;letter-spacing:-.025em;line-height:1.1}
+.rowhead h2 em{font-style:normal;color:var(--olive-d)}
+.rowhead h2 .bad{color:var(--red)}
+.rowhead .t{margin-left:auto;font-size:13.5px;font-weight:600;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.card{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:#fff;
+  box-shadow:0 1px 2px rgba(0,0,0,.04),0 12px 40px -18px rgba(0,0,0,.22)}
+.under{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:14px}
+.under .sub{font-size:15px;color:var(--ink-3)}
+.under a{font-size:13.5px;font-weight:600;color:var(--ink-2);text-decoration:none;
+  padding:5px 12px;border-radius:980px;border:1px solid var(--line);white-space:nowrap;
+  transition:background .18s var(--ease)}
+.under a:hover{background:var(--bg-2);color:var(--ink)}
+
+.scriptCol{position:sticky;top:94px}
+.kick{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--olive);margin:0 0 12px}
+.lead{font-size:24px;line-height:1.32;letter-spacing:-.02em;font-weight:650;margin:0 0 20px}
+.scriptCol p.b{font-size:16.5px;line-height:1.58;color:var(--ink-2);margin:0 0 15px}
+.nums{margin:26px 0 0;border-top:1px solid var(--line);padding-top:6px}
+.nums div{display:flex;justify-content:space-between;gap:18px;padding:9px 0;border-bottom:1px solid var(--line-2)}
+.nums dt{font-size:15px;color:var(--ink-2)}
+.nums dd{margin:0;font-size:15px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.careful{margin:26px 0 0;padding:16px 18px;border-radius:14px;background:var(--bg-2)}
+.careful h4{margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--olive-d)}
+.careful p{margin:0;font-size:15px;line-height:1.5;color:var(--ink-2)}
+.pace{font-size:13px;color:var(--ink-3);margin:10px 0 0;font-variant-numeric:tabular-nums}
+
+footer{padding:60px 0 92px;border-top:1px solid var(--line-2);color:var(--ink-3);font-size:15px}
+footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+
+@media (max-width:1180px){
+  .wrap{padding:0 28px}
+  .row .wrap{grid-template-columns:1fr;gap:34px}
+  .scriptCol{position:static}
+  .row{padding:54px 0}
+  .hero{padding:74px 0 54px}
+  .ways .wrap{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  .wrap{padding:0 18px}
+  .top .wrap{gap:12px}
+  .jump,.brand span{display:none}
+  .toc a{grid-template-columns:44px minmax(0,1fr) auto;gap:12px}
+  .toc .t,.toc .d,.toc .ch{display:none}
+  .rowhead{flex-wrap:wrap;gap:8px 14px}
+  .rowhead h2{font-size:24px}
+}
+</style>
 </head>
 <body>
-<div class="bar">
-  <span class="mark">Re<em>LEAF</em> · Finalist</span>
-  <nav>
-    <a href="index.html" aria-current="page">Script</a>
-    <a href="show.html">Slides</a>
-    <a href="animate.html">With animation</a>
-  </nav>
-  <span class="right"><span id="spnow"></span><span id="clock"></span><span>15:00 · Main Stage</span></span>
-</div>
-<div class="wrap">
-  <p class="lede">Fifteen minutes on the Main Stage. Eight speakers, <span id="n"></span> slides,
-    <span id="t"></span> of speech.</p>
-  <p class="subl">Every slide is drawn, not screenshotted: charts come from the numbers, photographs
-    appear only where the subject is photographic. Amber boxes are backup for the 10-minute
-    judges’ Q&amp;A and are never shown on stage.</p>
-  <div id="script"></div>
-</div>
-<script src="assets/deck.js?v9"></script>
-<script src="assets/charts.js?v9"></script>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">ReLEAF <span>· GEMS Taiwan</span></div>
+    <a class="jump" href="#chapters">Chapters</a>
+    <a class="jump" href="#contents">Contents</a>
+    <div id="vsw"></div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Fifteen minutes, <em id="hN">21 slides</em>, one system.</h1>
+    <p>A bioreactor at the edge of the field that makes a plant protectant on the day the crop
+      needs it, and keeps the bacteria inside. Every slide is drawn at stage size, every chart
+      from the numbers, and every title states the thing the slide proves.</p>
+    <dl class="meta">
+      <div><dt>Slot</dt><dd>15:00 · Main Stage</dd></div>
+      <div><dt>Speech</dt><dd id="stRun">13:00</dd></div>
+      <div><dt>Slides</dt><dd id="stN">21</dd></div>
+      <div><dt>Speakers</dt><dd id="stSp">8</dd></div>
+      <div><dt>Team</dt><dd>GEMS Taiwan 2026</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="ways"><div class="wrap" id="ways"></div></section>
+
+<section class="chaps" id="chapters">
+  <div class="wrap">
+    <p class="okick">The six chapters</p>
+    <div class="cgrid" id="chapgrid"></div>
+  </div>
+</section>
+
+<section class="contents" id="contents">
+  <div class="wrap">
+    <p class="h2">The fifteen minutes</p>
+    <ul class="toc" id="toc"></ul>
+  </div>
+</section>
+
+<main id="rows"></main>
+
+<footer>
+  <div class="wrap">
+    Every number on a slide is read off this deck's own charts and the wiki.
+    <a href="notes.html">Open it with the script</a>
+  </div>
+</footer>
+
+<script src="assets/nav.js?v=20"></script>
+<script src="assets/charts.js?v=20"></script>
+<script src="assets/deck.js?v=20"></script>
 <script>
-(function(){
-  const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
-  const mmss=s=>Math.floor(s/60)+':'+String(Math.round(s%60)).padStart(2,'0');
-  const W=1600,H=900,TW=418,K=TW/W;
-  let t=0,out='',sp=null;
-  SLIDES.forEach((s,n)=>{
-    if(s.sp!==sp){
-      sp=s.sp;
-      const info=SPEAKERS.find(x=>x.n===sp);
-      const d=SLIDES.filter(x=>x.sp===sp).reduce((a,x)=>a+x.secs,0);
-      out+=`<div class="sec"><h2>${sp}. ${esc(info.part)}</h2><span class="who">${esc(info.name)} · ${mmss(t)}–${mmss(t+d)}</span></div>`;
-    }
-    const words=s.say.trim().split(/\s+/).length;
-    out+=`<div class="srow" id="${s.id}">
-      <div><div class="thumbbox"><div class="framebox" style="height:${H*K}px">
-        <div class="frame" style="transform:scale(${K})"><section class="slide on ${s.cls||''}">${s.body}</section></div>
-      </div></div></div>
-      <div>
-        <div class="meta">${n+1}. ${mmss(t)} · ${s.secs}s · ${words} words · ${Math.round(words/(s.secs/60))} wpm</div>
-        <h3>${esc(s.title||s.id)}</h3>
-        <p class="say">${esc(s.say)}</p>
-        ${s.note?`<div class="note"><b>If pressed</b>${esc(s.note)}</div>`:''}
-      </div></div>`;
-    t+=s.secs;
+document.getElementById('vsw').innerHTML = viewSwitcher('script');
+
+document.getElementById('ways').innerHTML = VIEWS.map(v => {
+  const here = v.id === 'script';
+  return `<a class="way${here ? ' here' : ''}" href="${v.href}">
+    <b>${v.label}</b><p>${v.blurb}</p><i>${here ? 'You are here' : 'Open'}</i></a>`;
+}).join('');
+
+{ const tot = SLIDES.reduce((a,s)=>a+s.secs,0);
+  const sp = new Set(SLIDES.map(s=>s.speaker)).size;
+  document.getElementById('stN').textContent = SLIDES.length;
+  document.getElementById('hN').textContent = SLIDES.length + ' slides';
+  document.getElementById('stSp').textContent = sp;
+  document.getElementById('stRun').textContent = Math.floor(tot/60)+':'+String(tot%60).padStart(2,'0'); }
+
+/* chapter cards: the first slide of each node, and how long that chapter runs */
+{ const rows = NODES.map((n,k)=>{
+    const idx = k+1;
+    const own = SLIDES.filter(s => (Array.isArray(s.node)?s.node:[s.node]).includes(idx));
+    if (!own.length) return '';
+    const d = own.reduce((a,s)=>a+s.secs,0);
+    return `<a class="chap" href="#s${own[0].n}">
+      <img src="img/${n.img}.webp" alt="">
+      <div><b>${n.label}</b><span>${own.length} slides · ${Math.floor(d/60)}:${String(d%60).padStart(2,'0')}</span></div></a>`;
+  }).join('');
+  document.getElementById('chapgrid').innerHTML = rows; }
+
+const chapName = s => {
+  const a = Array.isArray(s.node) ? s.node : [s.node];
+  return a.filter(Boolean).map(i => NODES[i-1].label).join(' · ');
+};
+
+document.getElementById('toc').innerHTML = SLIDES.map((s,i) => `
+<li${i && SLIDES[i-1].speaker !== s.speaker ? ' class="hand"' : ''}><a href="#s${s.n}">
+  <span class="n">${String(s.n).padStart(2,'0')}</span>
+  <span class="t">${s.time}</span>
+  <span class="ttl">${s.title}<span>${s.nav}</span></span>
+  <span class="ch">${chapName(s)}</span>
+  <span class="who">${s.speaker}</span>
+  <span class="d">${s.secs}s</span>
+</a></li>`).join('');
+
+document.getElementById('rows').innerHTML = SLIDES.map((s,i) => {
+  const words = [s.script.lead, ...s.script.body].join(' ').replace(/<[^>]+>/g,' ').trim().split(/\s+/).length;
+  return `
+<section class="row" id="s${s.n}">
+  <div class="wrap">
+    <div class="slideCol">
+      <div class="rowhead">
+        <span class="n">Slide ${String(s.n).padStart(2,'0')}</span>
+        <h2>${s.title}</h2>
+        <span class="t">${s.time} · ${s.secs}s</span>
+      </div>
+      <div class="card">
+        <div class="stageWrap"><div class="stage">${stageHTML(SLIDES,i)}</div></div>
+      </div>
+      <div class="under">
+        <span class="sub">${s.nav}</span>
+        <a href="notes.html#${s.n}">Open with the script &rsaquo;</a>
+      </div>
+    </div>
+    <div class="scriptCol">
+      <p class="kick">${s.speaker} says</p>
+      <p class="lead">${s.script.lead}</p>
+      ${s.script.body.map(p => `<p class="b">${p}</p>`).join('')}
+      <p class="pace">${words} words · ${Math.round(words/(s.secs/60))} wpm</p>
+      ${s.script.numbers && s.script.numbers.length ? `<dl class="nums">${s.script.numbers.map(([k,v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>` : ''}
+      ${s.script.careful ? `<div class="careful"><h4>If pressed</h4><p>${s.script.careful}</p></div>` : ''}
+    </div>
+  </div>
+</section>`; }).join('');
+
+drawCharts(document);
+
+function fit(){
+  document.querySelectorAll('.stageWrap').forEach(w => {
+    w.firstElementChild.style.transform = `scale(${w.clientWidth / 1600})`;
   });
-  document.getElementById('script').innerHTML=out;
-  document.getElementById('n').textContent=SLIDES.length;
-  document.getElementById('t').textContent=mmss(t);
-  drawCharts(document);
-})();
+}
+addEventListener('resize', fit); fit();
+addEventListener('load', fit);
+
+const io = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('go'); io.unobserve(e.target); } });
+}, {threshold:.22});
+document.querySelectorAll('.stage').forEach(el => io.observe(el));
 </script>
-</body></html>
+</body>
+</html>

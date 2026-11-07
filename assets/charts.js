@@ -13,9 +13,9 @@
 */
 
 const CH = {
-  ink: '#10201a', grid: 'rgba(16,32,26,.14)', soft: 'rgba(16,32,26,.5)',
-  leaf: '#1E8A4F', bright: '#35C46E', red: '#C0392B', amber: '#C8862B',
-  slate: '#8A9A93', dark: '#17332a',
+  ink: '#1d1d1b', grid: 'rgba(29,29,27,.13)', soft: 'rgba(29,29,27,.45)',
+  leaf: '#4f6b24', bright: '#858a3e', olive: '#858a3e', deep: '#324519',
+  red: '#a4342a', amber: '#9a6b1e', slate: '#9b9c93', ctrl: '#b8b9b0',
 };
 
 function svgEl(w, h, cls) {

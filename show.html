@@ -3,23 +3,70 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Slides — ReLEAF Finalist Presentation</title>
-<link rel="stylesheet" href="assets/deck.css?v9">
+<title>ReLEAF · Slides</title>
+<meta name="description" content="GEMS Taiwan ReLEAF, the fifteen-minute finalist presentation.">
+<link rel="stylesheet" href="assets/deck.css?v=20">
+<style>
+html,body{height:100%;overflow:hidden;background:#f2f2ef}
+.deck{position:fixed;inset:0;display:grid;place-items:center}
+.frame{position:relative;background:#fff;border-radius:16px;overflow:hidden;
+  box-shadow:0 2px 6px rgba(0,0,0,.05),0 36px 90px -40px rgba(0,0,0,.45)}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;
+  transition:opacity .34s var(--ease),visibility 0s linear .34s}
+.slide.on{opacity:1;visibility:visible;transition:opacity .34s var(--ease),visibility 0s}
+.slide .stage{transform-origin:0 0}
+
+.bar{position:fixed;left:0;right:0;bottom:0;height:3px;background:rgba(29,29,27,.08);z-index:20}
+.bar i{display:block;height:100%;background:var(--olive);width:0;transition:width .34s var(--ease)}
+.chr{position:fixed;z-index:21;opacity:0;transition:opacity .3s var(--ease);pointer-events:none}
+.chr.show{opacity:1;pointer-events:auto}
+
+.topbar{left:0;right:0;top:0;height:60px;display:flex;align-items:center;gap:18px;padding:0 22px}
+.topbar .where{font-size:13.5px;font-weight:600;color:var(--ink-2);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.topbar .where b{color:var(--ink);font-weight:700}
+.topbar .where .spk{font-style:normal;font-weight:700;font-size:12.5px;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--ink-3);margin-right:12px;padding:3px 9px;border-radius:5px;
+  background:rgba(29,29,27,.06)}
+.topbar .where .spk.hand{color:#fff;background:var(--olive-d)}
+.topbar .vsw{margin-left:auto;flex:none;background:rgba(255,255,255,.86);
+  backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px)}
+
+.hud{display:flex;align-items:center;gap:14px;left:50%;bottom:26px;transform:translateX(-50%);
+  padding:8px 10px 8px 16px;border-radius:980px;
+  background:rgba(255,255,255,.82);border:1px solid var(--line-2);
+  backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  box-shadow:0 10px 30px -14px rgba(0,0,0,.3)}
+.hud .ct{font-size:13px;font-weight:600;color:var(--ink-2);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.hud .tm{font-size:13px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;
+  padding-left:14px;border-left:1px solid var(--line)}
+.hud button{width:30px;height:30px;border-radius:50%;border:0;background:var(--bg-2);
+  color:var(--ink);font-size:14px;cursor:pointer;display:grid;place-items:center;
+  transition:background .18s var(--ease)}
+.hud button:hover{background:#e8e8e2}
+.dots{left:50%;bottom:72px;transform:translateX(-50%);display:flex;gap:6px;align-items:center}
+.dots b{width:7px;height:7px;border-radius:50%;background:rgba(29,29,27,.2);cursor:pointer;
+  transition:background .2s var(--ease),transform .2s var(--ease)}
+.dots b.brk{margin-left:11px}
+.dots b.on{background:var(--olive);transform:scale(1.35)}
+</style>
 </head>
 <body>
-<div class="bar">
-  <span class="mark">Re<em>LEAF</em> · Finalist</span>
-  <nav>
-    <a href="index.html">Script</a>
-    <a href="show.html" aria-current="page">Slides</a>
-    <a href="animate.html">With animation</a>
-  </nav>
-  <span class="right"><span id="spnow"></span><span id="clock"></span><span>15:00 · Main Stage</span></span>
+<div class="deck"><div class="frame" id="frame"></div></div>
+<div class="chr topbar" id="topbar"><span class="where" id="where"></span><div id="vsw"></div></div>
+<div class="chr dots" id="dots"></div>
+<div class="chr hud" id="hud">
+  <span class="ct" id="ct">01 / 21</span>
+  <span class="tm" id="tm">0:00</span>
+  <button id="prev" title="Previous">&#8249;</button>
+  <button id="next" title="Next">&#8250;</button>
+  <button id="full" title="Full screen">&#9633;</button>
 </div>
-<div class="stagewrap" id="stagewrap"><div class="framebox" id="framebox"><div class="frame" id="frame"></div></div><div class="pips" id="pips"></div></div>
-<div class="prog" id="prog"></div>
-<script src="assets/deck.js?v9"></script>
-<script src="assets/charts.js?v9"></script>
-<script>window.MOTION='off'</script>
-<script src="assets/stage.js?v9"></script>
-</body></html>
+<div class="bar"><i id="barI"></i></div>
+<script src="assets/nav.js?v=20"></script>
+<script src="assets/charts.js?v=20"></script>
+<script src="assets/deck.js?v=20"></script>
+<script src="assets/present.js?v=20"></script>
+<script>mountDeck(SLIDES, 'slides');</script>
+</body>
+</html>
